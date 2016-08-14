@@ -254,3 +254,8 @@ paket-files/
 
 #typings
 typings/
+
+#my ignored files
+npm-debug.log.*
+/app/*.js
+/app/*.map
