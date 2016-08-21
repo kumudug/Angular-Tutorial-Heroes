@@ -14,13 +14,15 @@ import { HeroService } from './hero.service';
 export class HeroesComponent implements OnInit{ 
   selectedHero: Hero;
   heroes: Hero[];
+  error: any;
+  addingHero: boolean;
 
   constructor(private router: Router, private heroService: HeroService) { }
 
 
   getHeroes(): void {
-    //this.heroService.getHeroes().then(heroes => this.heroes = heroes);
-    this.heroService.getHeroesSlowly().then(heroes => this.heroes = heroes);
+    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+    //this.heroService.getHeroesSlowly().then(heroes => this.heroes = heroes);
   }
   
   ngOnInit(): void {
@@ -33,6 +35,27 @@ export class HeroesComponent implements OnInit{
 
   gotoDetail(): void {
     this.router.navigate(['/detail', this.selectedHero.id]);
+  }
+
+  addHero(): void {
+    this.addingHero = true;
+    this.selectedHero = null;
+  }
+
+  close(savedHero: Hero): void {
+    this.addingHero = false;
+    if (savedHero) { this.getHeroes(); }
+  }
+
+  deleteHero(hero: Hero, event: any): void {
+    event.stopPropagation();
+    this.heroService
+        .delete(hero)
+        .then(res => {
+          this.heroes = this.heroes.filter(h => h !== hero);
+          if (this.selectedHero === hero) { this.selectedHero = null; }
+        })
+        .catch(error => this.error = error);
   }
 
 }
