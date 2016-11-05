@@ -7,21 +7,29 @@ import { HeroSearchService } from './hero-search.service';
 import { Hero } from './hero';
 
 @Component({
+  moduleId: module.id,
   selector: 'hero-search',
-  templateUrl: 'app/hero-search.component.html',
-  styleUrls:  ['app/hero-search.component.css'],
+  templateUrl: 'hero-search.component.html',
+  styleUrls:  ['hero-search.component.css'],
   providers: [HeroSearchService]
 })
 export class HeroSearchComponent implements OnInit {
   heroes: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
+
   constructor(
     private heroSearchService: HeroSearchService,
     private router: Router) {}
+
   // Push a search term into the observable stream.
   search(term: string): void {
     this.searchTerms.next(term);
   }
+
+  //A Subject is a producer of an observable event stream; searchTerms produces an Observable of strings, the filter criteria for the name search.
+
+  //Each call to search puts a new string into this subject's observable stream by calling next.
+
   ngOnInit(): void {
     this.heroes = this.searchTerms
       .debounceTime(300)        // wait for 300ms pause in events

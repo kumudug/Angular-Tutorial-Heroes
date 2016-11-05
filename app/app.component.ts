@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import './rxjs-extensions';
 
 @Component({
+  moduleId: module.id,
   selector: 'my-app',
   template: `
     <h1>{{title}}</h1>
@@ -11,7 +12,7 @@ import './rxjs-extensions';
     </nav>
     <router-outlet></router-outlet>
   `,  
-  styleUrls:  ['app/app.component.css']
+  styleUrls:  ['app.component.css']
 })
 export class AppComponent {
   title = 'Tour of Heroes';

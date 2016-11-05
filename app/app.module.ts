@@ -1,16 +1,18 @@
+import './rxjs-extensions';
+
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpModule }     from '@angular/http';
 
-// Imports for loading & configuring the in-memory web api
-import { XHRBackend } from '@angular/http';
+import { AppRoutingModule } from './app-routing.module';
 
-import { InMemoryBackendService, SEED_DATA } from 'angular2-in-memory-web-api';
-import { InMemoryDataService }               from './in-memory-data.service';
+//import { InMemoryBackendService, SEED_DATA } from 'angular2-in-memory-web-api';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
 
 import { AppComponent }   from './app.component';
-import { routing }        from './app.routing';
+//import { routing }        from './app.routing';
 
 import { HeroesComponent }      from './heroes.component';
 import { DashboardComponent }   from './dashboard.component';
@@ -22,8 +24,10 @@ import { HeroSearchComponent }  from './hero-search.component';
   imports: [
     BrowserModule,
     FormsModule,
-    routing,
-    HttpModule
+    //routing,
+    HttpModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    AppRoutingModule
   ],
   declarations: [
     AppComponent,
@@ -33,9 +37,9 @@ import { HeroSearchComponent }  from './hero-search.component';
     HeroSearchComponent
   ],
   providers: [
-    HeroService,
-    { provide: XHRBackend, useClass: InMemoryBackendService }, // in-mem server
-    { provide: SEED_DATA,  useClass: InMemoryDataService }     // in-mem server data
+    HeroService//,
+    //{ provide: XHRBackend, useClass: InMemoryBackendService }, // in-mem server
+    //{ provide: SEED_DATA,  useClass: InMemoryDataService }     // in-mem server data
   ],
   bootstrap: [ AppComponent ]
 })
